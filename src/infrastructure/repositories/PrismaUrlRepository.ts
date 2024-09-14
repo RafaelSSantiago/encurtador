@@ -6,17 +6,21 @@ const prisma = new PrismaClient();
 
 export class PrismaUrlRepository implements UrlRepository {
   async create(url: Url): Promise<Url> {
-    return prisma.url.create({
+    return await prisma.url.create({
       data: {
         originalUrl: url.originalUrl,
         shortenedUrl: url.shortenedUrl,
-        userId: url.userId,
+        // userId: url.userId,
       },
     });
   }
 
-  async findByShortenedUrl(shortenedUrl: string): Promise<Url | null> {
-    return null;
+  async findByShortenedUrl(hash: string): Promise<string | undefined> {
+    const value = await prisma.url.findUnique({
+      where: { shortenedUrl: hash },
+      select: { originalUrl: true },
+    });
+    return value?.originalUrl
   }
 
   async findByUserId(userId: number): Promise<Url[]> {

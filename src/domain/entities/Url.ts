@@ -4,6 +4,6 @@ export class Url {
     public originalUrl: string,
     public shortenedUrl: string,
     public clicks: number,
-    public userId?: number
+    public userId?: number | null
   ) {}
 }
