@@ -7,7 +7,9 @@ const hashService = new HashService();
 
 export class UserRepository {
   async create(user: User) {
-    const hashedPassword = await hashService.hashPassword(user.password);
+    const hashedPassword = await hashService.hashPassword(
+      user.password as string
+    );
 
     const createUser = await prisma.user.create({
       data: {
@@ -16,6 +18,6 @@ export class UserRepository {
       },
     });
 
-    return new User(createUser.id, createUser.email, createUser.password);
+    return new User(createUser.id, createUser.email);
   }
 }
