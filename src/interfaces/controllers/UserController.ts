@@ -6,5 +6,6 @@ export class Usercontroller {
 
   async createUSerdDb(req: Request, res: Response) {
     const user = await this.registerUserUseCase.execute(req.body);
+    res.json(user);
   }
 }
