@@ -4,9 +4,9 @@ import { Url } from "../domain/entities/Url";
 export class ShortenUrlUseCase {
   constructor(private urlRepository: UrlRepository) {}
 
-  async execute(originalUrl: string, userId?: number): Promise<Url> {
+  async execute(originalUrl: string, jwtUser?: any): Promise<Url> {
     const shortenedUrl = this.generateShortUrl();
-    const url = new Url(0, originalUrl, shortenedUrl, 0, userId);
+    const url = new Url(0, originalUrl, shortenedUrl, 0, null, jwtUser);
     return this.urlRepository.create(url);
   }
 
