@@ -9,8 +9,8 @@ export class UrlController {
   ) {}
 
   async shortenUrl(req: Request, res: Response) {
-    const { userId, originalUrl } = req.body;
-    const url = await this.shortenUrlUseCase.execute(originalUrl, userId);
+    const { originalUrl, user } = req.body;
+    const url = await this.shortenUrlUseCase.execute(originalUrl, user);
     res.json({ shortenedUrl: `http://localhost/${url.shortenedUrl}` });
   }
 
