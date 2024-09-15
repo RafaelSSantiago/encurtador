@@ -1,18 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { UrlRepository } from "../../domain/repositories/UrlRepository";
 import { Url } from "../../domain/entities/Url";
-import { UserExistingValidation } from "../../domain/validators/user-existing-validation";
 
 const prisma = new PrismaClient();
 
 export class PrismaUrlRepository implements UrlRepository {
-  async create(url: Url): Promise<any> {
-    const userExisting = new UserExistingValidation(url.userId as number);
-    const hasUser = await userExisting.validate();
+  async create(url: Partial<Url>): Promise<any> {
     const params = {
       originalUrl: url.originalUrl,
       shortenedUrl: url.shortenedUrl,
-      ...(hasUser && { userId: url.userId }),
+      ...(url.jwtUser && { userId: url.jwtUser.id }),
     };
 
     return await prisma.url.create({
