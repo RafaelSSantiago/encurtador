@@ -18,3 +18,11 @@ export const serverError = (error: Error): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error.stack as string),
 });
+
+export const badRequest = (error: Error): HttpResponse => ({
+  statusCode: 400,
+  body: {
+    name: error.name,
+    message: error.message,
+  },
+});
