@@ -21,8 +21,9 @@ export class UserRepository implements UserRepositoryInterface {
 
     return new User(createUser.id, createUser.email);
   }
-  
+
   async findByEmail(email: string): Promise<User | undefined> {
-    return undefined
+    const user = await prisma.user.findUnique({ where: { email } });
+    return user as User;
   }
 }
