@@ -9,6 +9,7 @@ import { Usercontroller } from "./interfaces/controllers/UserController";
 import { LoginController } from "./interfaces/controllers/LoginController";
 import LoginUserUseCase from "./application/LoginUserCase";
 import LoginUserRepository from "./infrastructure/repositories/LoginUserRepository";
+import { authMiddleware } from "./infrastructure/middlewares/AuthMiddleware";
 
 const app = express();
 app.use(express.json());
@@ -24,12 +25,18 @@ const urlController = new UrlController(shortenUrlUseCase, redirectUrlUseCase);
 const userContoller = new Usercontroller(registerUserUseCase);
 const loginController = new LoginController(loginUseCase);
 
-app.post("/shorten", (req, res) => urlController.shortenUrl(req, res));
+// rota de encurtar
+app.post("/shorten", authMiddleware, (req, res) =>
+  urlController.shortenUrl(req, res)
+);
 
+//rota de encontrar o hash
 app.get("/:hash", (req, res) => urlController.findHashBd(req, res));
 
+// rota de cadastro
 app.post("/user", (req, res) => userContoller.createUSerdDb(req, res));
 
+// rota de login
 app.post("/login", (req, res) => loginController.login(req, res));
 
 app.listen(3000, () => {
