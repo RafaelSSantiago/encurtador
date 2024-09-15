@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../domain/entities/User";
 import { HashService } from "../services/EncryptService";
+import { UserRepositoryInterface } from "../../domain/repositories/UserRepositoryInterface";
 
 const prisma = new PrismaClient();
 const hashService = new HashService();
 
-export class UserRepository {
+export class UserRepository implements UserRepositoryInterface {
   async create(user: User) {
     const hashedPassword = await hashService.hashPassword(
       user.password as string
@@ -19,5 +20,9 @@ export class UserRepository {
     });
 
     return new User(createUser.id, createUser.email);
+  }
+  
+  async findByEmail(email: string): Promise<User | undefined> {
+    return undefined
   }
 }
