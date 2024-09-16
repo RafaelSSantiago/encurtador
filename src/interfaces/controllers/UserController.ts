@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { badRequest, ok, serverError } from "../../domain/helpers/httpHelpers";
 import { RequiredFieldValidation } from "../../domain/validators/RequiredFieldValidation";
 import { UserService } from "../../infrastructure/services/UserService";
-import { User } from "../../domain/entities/User"; 
+import { User } from "../../domain/entities/User";
 import { UserToken } from "../UserToken";
 
 export class Usercontroller {
@@ -14,7 +14,7 @@ export class Usercontroller {
   }
 
   async createUSerdDb(req: Request, res: Response) {
-    const body: User = req.body
+    const body: User = req.body;
     try {
       for (const field of ["email", "password"]) {
         const error = new RequiredFieldValidation(field).validate(req.body);
