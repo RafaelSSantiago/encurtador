@@ -32,3 +32,8 @@ export const unauthorized = (): HttpResponse => ({
   statusCode: 401,
   body: new UnauthorizedError(),
 });
+
+export const notFoundError = (error: Error): HttpResponse => ({
+  statusCode: 401,
+  body: error
+});
