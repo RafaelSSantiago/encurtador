@@ -3,7 +3,7 @@ import { ShortenUrlUseCase } from "../../application/ShortenUrlUseCase";
 import { RedirectUrlUseCase } from "../../application/RedirectUrlUseCase";
 import { DeleteUrlUseCase } from "../../application/DeleteUrlUseCase";
 import { serverError } from "../../domain/helpers/httpHelpers";
-import UpdateUrlUseCase from "../../application/UpdateUrlUseCase";
+import { UpdateUrlUseCase } from "../../application/UpdateUrlUseCase";
 import { Url } from "../../domain/entities/Url";
 
 export class UrlController {
