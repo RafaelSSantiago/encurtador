@@ -1,7 +1,7 @@
 import { ok, serverError } from "../domain/helpers/httpHelpers";
 import { HttpResponse } from "../domain/protocols/http";
 import { UrlRepository } from "../domain/repositories/UrlRepository";
-import { DeleteUrlDTO } from "../dtos/deleteUrlDTO";
+import { DeleteUrlDTO } from "../dtos/deleteUrl.dto";
 
 export class DeleteUrlUseCase {
   constructor(private urlRepository: UrlRepository) {}

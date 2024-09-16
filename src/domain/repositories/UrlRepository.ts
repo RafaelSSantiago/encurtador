@@ -1,4 +1,4 @@
-import { DeleteUrlDTO } from "../../dtos/deleteUrlDTO";
+import { DeleteUrlDTO } from "../../dtos/deleteUrl.dto";
 import { Url } from "../entities/Url";
 
 export interface UrlRepository {

@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { UrlRepository } from "../../domain/repositories/UrlRepository";
 import { Url } from "../../domain/entities/Url";
 import { UrlNotFound } from "../../domain/errors/UrlNotFound.error";
-import { DeleteUrlDTO } from "../../dtos/deleteUrlDTO";
+import { DeleteUrlDTO } from "../../dtos/deleteUrl.dto";
 
 const prisma = new PrismaClient();
 
