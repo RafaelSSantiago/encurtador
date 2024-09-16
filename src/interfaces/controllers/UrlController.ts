@@ -6,6 +6,7 @@ import { serverError } from "../../domain/helpers/httpHelpers";
 import { UpdateUrlUseCase } from "../../application/UpdateUrlUseCase";
 import { Url } from "../../domain/entities/Url";
 import { ShortenUrlDto } from "../../dtos/shortenUrl.dto";
+import { DeleteUrlDTO } from "../../dtos/deleteUrl.dto";
 
 export class UrlController {
   constructor(
@@ -28,17 +29,15 @@ export class UrlController {
   }
 
   async deleteShortenedUrl(req: Request, res: Response) {
+    const body: DeleteUrlDTO = req.body
     try {
       const { hash } = req.params;
-      const { user } = req.body;
 
       if (!hash) {
         return res.status(400).json({ message: "Hash parameter is required" });
       }
 
-      const requestPayload = { url: hash, user };
-
-      const httpResponse = await this.deleteUrlUseCase.execute(requestPayload);
+      const httpResponse = await this.deleteUrlUseCase.execute(body);
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);

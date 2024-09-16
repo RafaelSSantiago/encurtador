@@ -6,6 +6,6 @@ export interface UserDTO {
 }
 
 export interface DeleteUrlDTO {
-  url: string;
-  user: UserDTO;
+  url?: string;
+  user?: UserDTO;
 }
