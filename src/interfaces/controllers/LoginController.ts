@@ -10,7 +10,7 @@ export class LoginController {
     const body: LoginDTO = req.body;
     try {
       for (const field of ["email", "password"]) {
-        const error = new RequiredFieldValidation(field).validate(req.body);
+        const error = new RequiredFieldValidation(field).validate(body);
         if (error) {
           const missingParam = badRequest(error);
           return res.status(missingParam.statusCode).json(missingParam.body);
