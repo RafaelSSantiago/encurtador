@@ -1,12 +1,14 @@
 import { UrlRepository } from "../domain/repositories/UrlRepository";
 import { Url } from "../domain/entities/Url";
+import { ShortenUrlDto } from "../dtos/shortenUrl.dto";
 
 export class ShortenUrlUseCase {
   constructor(private urlRepository: UrlRepository) {}
 
-  async execute(originalUrl: string, jwtUser?: any): Promise<Url> {
+  async execute(body: ShortenUrlDto): Promise<Url> {
+
     const shortenedUrl = this.generateShortUrl();
-    const url = new Url(0, originalUrl, shortenedUrl, 0, null, jwtUser);
+    const url = new Url(0, body.originalUrl, shortenedUrl, 0, null, body.user);
     return this.urlRepository.create(url);
   }
 

@@ -5,6 +5,7 @@ import { DeleteUrlUseCase } from "../../application/DeleteUrlUseCase";
 import { serverError } from "../../domain/helpers/httpHelpers";
 import { UpdateUrlUseCase } from "../../application/UpdateUrlUseCase";
 import { Url } from "../../domain/entities/Url";
+import { ShortenUrlDto } from "../../dtos/shortenUrl.dto";
 
 export class UrlController {
   constructor(
@@ -15,8 +16,8 @@ export class UrlController {
   ) {}
 
   async shortenUrl(req: Request, res: Response) {
-    const { originalUrl, user } = req.body;
-    const url = await this.shortenUrlUseCase.execute(originalUrl, user);
+    const body: ShortenUrlDto = req.body;
+    const url = await this.shortenUrlUseCase.execute(body);
     res.json({ shortenedUrl: `http://localhost/${url.shortenedUrl}` });
   }
 
