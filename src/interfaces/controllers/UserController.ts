@@ -2,9 +2,14 @@ import { RegisterUserUseCase } from "../../application/RegisterUserUseCase";
 import { Request, Response } from "express";
 import { badRequest, ok, serverError } from "../../domain/helpers/httpHelpers";
 import { RequiredFieldValidation } from "../../domain/validators/RequiredFieldValidation";
+import { UserService } from "../../infrastructure/services/UserService";
 
 export class Usercontroller {
-  constructor(private registerUserUseCase: RegisterUserUseCase) {}
+  private userService: UserService;
+
+  constructor(private registerUserUseCase: RegisterUserUseCase) {
+    this.userService = new UserService();
+  }
 
   async createUSerdDb(req: Request, res: Response) {
     try {
@@ -16,6 +21,16 @@ export class Usercontroller {
         }
       }
       const httpResponse = await this.registerUserUseCase.execute(req.body);
+      return res.status(httpResponse.statusCode).json(httpResponse.body);
+    } catch (error) {
+      const errorResponse = serverError(error as any);
+      return res.status(errorResponse.statusCode).json(errorResponse.body);
+    }
+  }
+
+  async listUserUrls(req: Request, res: Response) {
+    try {
+      const httpResponse = await this.userService.getUserUrls(req.body);
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);
