@@ -12,7 +12,6 @@ export class UserService {
   }
 
   async getUserUrls(user: any): Promise<HttpResponse> {
-    console.log(user);
     const userExisting = await new UserExistingValidation(user.email).validate()
     if (!userExisting) {
       return notFoundError(new UserNotFound(user.email));
