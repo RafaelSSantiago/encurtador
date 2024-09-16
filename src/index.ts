@@ -10,6 +10,8 @@ import { LoginController } from "./interfaces/controllers/LoginController";
 import LoginUserUseCase from "./application/LoginUserCase";
 import LoginUserRepository from "./infrastructure/repositories/LoginUserRepository";
 import { authMiddleware } from "./infrastructure/middlewares/AuthMiddleware";
+import { DeleteUrlUseCase } from "./application/DeleteUrlUseCase";
+import UpdateUrlUseCase from "./application/UpdateUrlUseCase";
 
 const app = express();
 app.use(express.json());
@@ -18,10 +20,17 @@ const urlRepository = new PrismaUrlRepository();
 const userRepository = new UserRepository();
 const LoginRepository = new LoginUserRepository();
 const redirectUrlUseCase = new RedirectUrlUseCase(urlRepository);
+const updateUrlUseCase = new UpdateUrlUseCase(urlRepository);
 const shortenUrlUseCase = new ShortenUrlUseCase(urlRepository);
 const registerUserUseCase = new RegisterUserUseCase(userRepository);
+const deleteUrlUseCase = new DeleteUrlUseCase(urlRepository);
 const loginUseCase = new LoginUserUseCase(LoginRepository);
-const urlController = new UrlController(shortenUrlUseCase, redirectUrlUseCase);
+const urlController = new UrlController(
+  shortenUrlUseCase,
+  redirectUrlUseCase,
+  deleteUrlUseCase,
+  updateUrlUseCase
+);
 const userContoller = new Usercontroller(registerUserUseCase);
 const loginController = new LoginController(loginUseCase);
 
@@ -42,6 +51,14 @@ app.post("/login", (req, res) => loginController.login(req, res));
 // retornar as urls do user
 app.get("/user/url", authMiddleware, (req, res) =>
   userContoller.listUserUrls(req, res)
+);
+
+app.delete("/url/:hash", authMiddleware, (req, res) =>
+  urlController.deleteShortenedUrl(req, res)
+);
+
+app.put("/url/:hash", authMiddleware, (req, res) =>
+  urlController.updateOriginalUrl(req, res)
 );
 
 app.listen(3000, () => {
