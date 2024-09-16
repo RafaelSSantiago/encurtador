@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { UrlRepository } from "../../domain/repositories/UrlRepository";
 import { Url } from "../../domain/entities/Url";
+import { UrlNotFound } from "../../domain/errors/UrlNotFound.error";
 
 const prisma = new PrismaClient();
 
@@ -17,12 +18,21 @@ export class PrismaUrlRepository implements UrlRepository {
     });
   }
 
-  async findByShortenedUrl(hash: string): Promise<string | undefined> {
-    const value = await prisma.url.findUnique({
+  async findByShortenedUrl(hash: string): Promise<any> {
+    const url = await prisma.url.findUnique({
       where: { shortenedUrl: hash },
-      select: { originalUrl: true },
+      select: { originalUrl: true, clicks: true },
     });
-    return value?.originalUrl;
+
+    if (!url) {
+      return new UrlNotFound();
+    }
+
+    await prisma.url.update({
+      where: { shortenedUrl: hash },
+      data: { clicks: url.clicks + 1 },
+    });
+    return url?.originalUrl;
   }
 
   async findByUserId(userId: number): Promise<Url[]> {
