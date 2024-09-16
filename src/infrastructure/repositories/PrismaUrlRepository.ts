@@ -20,7 +20,7 @@ export class PrismaUrlRepository implements UrlRepository {
 
   async findByShortenedUrl(hash: string): Promise<any> {
     const url = await prisma.url.findUnique({
-      where: { shortenedUrl: hash },
+      where: { shortenedUrl: hash, deletedAt: null },
       select: { originalUrl: true, clicks: true },
     });
 
@@ -28,10 +28,13 @@ export class PrismaUrlRepository implements UrlRepository {
       return new UrlNotFound();
     }
 
-    await prisma.url.update({
-      where: { shortenedUrl: hash },
-      data: { clicks: url.clicks + 1 },
-    });
+    const _url = {
+      ...url,
+      hash,
+    };
+
+    await this.updateClicks(_url);
+
     return url?.originalUrl;
   }
 
@@ -41,9 +44,32 @@ export class PrismaUrlRepository implements UrlRepository {
     });
   }
 
-  async softDelete(url: Url): Promise<void> {}
+  async softDelete(body: any): Promise<any> {
+    const url = await prisma.url.findFirst({
+      where: {
+        shortenedUrl: body.url,
+        userId: body.user.id,
+        deletedAt: null,
+      },
+    });
 
-  async updateClicks(url: Url): Promise<void> {}
+    if (!url) {
+      return new UrlNotFound();
+    }
+
+    return await prisma.url.update({
+      where: { id: url.id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  async updateClicks(url: any): Promise<void> {
+    console.log(url);
+    await prisma.url.update({
+      where: { shortenedUrl: url.hash },
+      data: { clicks: url.clicks + 1 },
+    });
+  }
 
   async updateUrl(url: Url): Promise<void> {}
 }
