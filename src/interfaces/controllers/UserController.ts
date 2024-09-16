@@ -6,6 +6,9 @@ import { UserService } from "../../infrastructure/services/UserService";
 import { User } from "../../domain/entities/User";
 import { UserToken } from "../UserToken";
 
+/**
+ * Controlador para operações relacionadas a usuários.
+ */
 export class Usercontroller {
   private userService: UserService;
 
@@ -13,7 +16,14 @@ export class Usercontroller {
     this.userService = new UserService();
   }
 
-  async createUSerdDb(req: Request, res: Response) {
+  /**
+   * @function createUSerdDb
+   * @description Registra um novo usuário no banco de dados.
+   * @param {Request} req - Objeto de requisição do Express.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<Response>} Resposta HTTP com o status e o corpo da resposta.
+   */
+  async createUSerdDb(req: Request, res: Response): Promise<Response> {
     const body: User = req.body;
     try {
       for (const field of ["email", "password"]) {
@@ -31,7 +41,14 @@ export class Usercontroller {
     }
   }
 
-  async listUserUrls(req: Request, res: Response) {
+  /**
+   * @function listUserUrls
+   * @description Lista todas as URLs encurtadas do usuário autenticado.
+   * @param {Request} req - Objeto de requisição do Express.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<Response>} Resposta HTTP com o status e o corpo da resposta.
+   */
+  async listUserUrls(req: Request, res: Response): Promise<Response> {
     const body: UserToken = req.body.user;
     try {
       const httpResponse = await this.userService.getUserUrls(body);
