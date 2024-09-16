@@ -39,6 +39,11 @@ app.post("/user", (req, res) => userContoller.createUSerdDb(req, res));
 // rota de login
 app.post("/login", (req, res) => loginController.login(req, res));
 
+// retornar as urls do user
+app.get("/user", authMiddleware, (req, res) =>
+  userContoller.listUserUrls(req, res)
+);
+
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
