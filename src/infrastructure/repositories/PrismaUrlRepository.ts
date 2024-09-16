@@ -67,12 +67,27 @@ export class PrismaUrlRepository implements UrlRepository {
   }
 
   async updateClicks(url: any): Promise<void> {
-    console.log(url);
     await prisma.url.update({
       where: { shortenedUrl: url.hash },
       data: { clicks: url.clicks + 1 },
     });
   }
 
-  async updateUrl(url: Url): Promise<void> {}
+  async updateUrl(url: Partial<Url>): Promise<UrlDTO> {
+    const urlData = await prisma.url.findFirst({
+      where: {
+        shortenedUrl: url.shortenedUrl,
+      },
+    });
+
+    return await prisma.url.update({
+      where: {
+        id: urlData?.id,
+      },
+      data: {
+        originalUrl: url.originalUrl,
+        updatedAt: new Date(),
+      },
+    });
+  }
 }

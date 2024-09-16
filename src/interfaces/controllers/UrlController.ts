@@ -3,12 +3,15 @@ import { ShortenUrlUseCase } from "../../application/ShortenUrlUseCase";
 import { RedirectUrlUseCase } from "../../application/RedirectUrlUseCase";
 import { DeleteUrlUseCase } from "../../application/DeleteUrlUseCase";
 import { serverError } from "../../domain/helpers/httpHelpers";
+import UpdateUrlUseCase from "../../application/UpdateUrlUseCase";
+import { Url } from "../../domain/entities/Url";
 
 export class UrlController {
   constructor(
     private shortenUrlUseCase: ShortenUrlUseCase,
     private redirectUrlUseCase: RedirectUrlUseCase,
-    private deleteUrlUseCase: DeleteUrlUseCase
+    private deleteUrlUseCase: DeleteUrlUseCase,
+    private updateUrlUseCase: UpdateUrlUseCase
   ) {}
 
   async shortenUrl(req: Request, res: Response) {
@@ -35,6 +38,26 @@ export class UrlController {
       const requestPayload = { url: hash, user };
 
       const httpResponse = await this.deleteUrlUseCase.execute(requestPayload);
+      return res.status(httpResponse.statusCode).json(httpResponse.body);
+    } catch (error) {
+      const errorResponse = serverError(error as any);
+      return res.status(errorResponse.statusCode).json(errorResponse.body);
+    }
+  }
+
+  async updateOriginalUrl(req: Request, res: Response) {
+    console.log("oi");
+    const { hash } = req.params;
+    const { originalUrl } = req.body;
+    const { user } = req.body;
+
+    const url: Partial<Url> = {
+      shortenedUrl: hash,
+      originalUrl: originalUrl,
+      jwtUser: user,
+    };
+    try {
+      const httpResponse = await this.updateUrlUseCase.execute(url);
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);
