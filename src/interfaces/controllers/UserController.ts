@@ -4,6 +4,7 @@ import { badRequest, ok, serverError } from "../../domain/helpers/httpHelpers";
 import { RequiredFieldValidation } from "../../domain/validators/RequiredFieldValidation";
 import { UserService } from "../../infrastructure/services/UserService";
 import { User } from "../../domain/entities/User"; 
+import { UserToken } from "../UserToken";
 
 export class Usercontroller {
   private userService: UserService;
@@ -31,8 +32,9 @@ export class Usercontroller {
   }
 
   async listUserUrls(req: Request, res: Response) {
+    const body: UserToken = req.body.user;
     try {
-      const httpResponse = await this.userService.getUserUrls(req.body);
+      const httpResponse = await this.userService.getUserUrls(body);
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);
