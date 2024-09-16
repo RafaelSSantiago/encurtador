@@ -7,6 +7,7 @@ export class LoginController {
   constructor(private loginUserUseCase: LoginUserUseCase) {}
 
   async login(req: Request, res: Response) {
+    const body: LoginDTO = req.body;
     try {
       for (const field of ["email", "password"]) {
         const error = new RequiredFieldValidation(field).validate(req.body);
@@ -16,7 +17,7 @@ export class LoginController {
         }
       }
 
-      const httpResponse = await this.loginUserUseCase.execute(req.body);
+      const httpResponse = await this.loginUserUseCase.execute(body);
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);
