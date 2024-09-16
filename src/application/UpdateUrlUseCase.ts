@@ -3,7 +3,7 @@ import { ok, serverError } from "../domain/helpers/httpHelpers";
 import { UrlRepository } from "../domain/repositories/UrlRepository";
 import { HttpResponse } from "../domain/protocols/http";
 
-export default class UpdateUrlUseCase {
+export class UpdateUrlUseCase {
   constructor(private urlRepository: UrlRepository) {}
 
   async execute(url: Partial<Url>): Promise<HttpResponse> {
