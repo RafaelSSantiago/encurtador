@@ -26,7 +26,9 @@ export class PrismaUrlRepository implements UrlRepository {
   }
 
   async findByUserId(userId: number): Promise<Url[]> {
-    return [];
+    return await prisma.url.findMany({
+      where: { userId },
+    });
   }
 
   async softDelete(url: Url): Promise<void> {}
