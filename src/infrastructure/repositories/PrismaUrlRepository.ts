@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { UrlRepository } from "../../domain/repositories/UrlRepository";
 import { Url } from "../../domain/entities/Url";
 import { UrlNotFound } from "../../domain/errors/UrlNotFound.error";
+import { DeleteUrlDTO } from "../../dtos/deleteUrlDTO";
 
 const prisma = new PrismaClient();
 
@@ -44,7 +45,7 @@ export class PrismaUrlRepository implements UrlRepository {
     });
   }
 
-  async softDelete(body: any): Promise<any> {
+  async softDelete(body: DeleteUrlDTO): Promise<any> {
     const url = await prisma.url.findFirst({
       where: {
         shortenedUrl: body.url,
