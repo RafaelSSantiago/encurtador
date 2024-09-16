@@ -51,15 +51,15 @@ export class PrismaUrlRepository implements UrlRepository {
     const url = await prisma.url.findFirst({
       where: {
         shortenedUrl: body.url,
-        userId: body.user.id,
+        userId: body.user?.id,
         deletedAt: null,
       },
     });
-
+  
     if (!url) {
       return new UrlNotFound();
     }
-
+  
     return await prisma.url.update({
       where: { id: url.id },
       data: { deletedAt: new Date() },
