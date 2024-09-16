@@ -40,7 +40,7 @@ app.post("/user", (req, res) => userContoller.createUSerdDb(req, res));
 app.post("/login", (req, res) => loginController.login(req, res));
 
 // retornar as urls do user
-app.get("/user", authMiddleware, (req, res) =>
+app.get("/user/url", authMiddleware, (req, res) =>
   userContoller.listUserUrls(req, res)
 );
 
