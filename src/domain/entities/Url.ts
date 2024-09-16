@@ -1,6 +1,6 @@
 export class Url {
   constructor(
-    public id: number,
+    public id: string,
     public originalUrl: string,
     public shortenedUrl?: string,
     public clicks?: number,
