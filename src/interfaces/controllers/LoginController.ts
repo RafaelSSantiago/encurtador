@@ -3,10 +3,20 @@ import { Request, Response } from "express";
 import { RequiredFieldValidation } from "../../domain/validators/RequiredFieldValidation";
 import { badRequest, serverError } from "../../domain/helpers/httpHelpers";
 
+/**
+ * Controlador para operações relacionadas ao login.
+ */
 export class LoginController {
   constructor(private loginUserUseCase: LoginUserUseCase) {}
 
-  async login(req: Request, res: Response) {
+  /**
+   * @function login
+   * @description Realiza o login de um usuário.
+   * @param {Request} req - Objeto de requisição do Express.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<Response>} Resposta HTTP com o status da operação.
+   */
+  async login(req: Request, res: Response): Promise<Response> {
     const body: LoginDTO = req.body;
     try {
       for (const field of ["email", "password"]) {
