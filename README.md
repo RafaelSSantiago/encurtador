@@ -60,6 +60,8 @@ As principais dependências do projeto são:
 - `jsonwebtoken`: Biblioteca para trabalhar com tokens JWT.
 - `bcrypt`: Biblioteca para hashing de senhas.
 - `dotenv`: Biblioteca para carregar variáveis de ambiente de um arquivo `.env`.
+- `swagger`: Para gerar a documentação do projeto`.
+- `uuid`: Para gerar ids personalizados`.
 
 ## Configuração
 
