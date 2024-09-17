@@ -7,7 +7,6 @@ import { UpdateUrlUseCase } from "../../application/UpdateUrlUseCase";
 import { Url } from "../../domain/entities/Url";
 import { ShortenUrlDto } from "../../dtos/shortenUrl.dto";
 import { DeleteUrlDTO } from "../../dtos/deleteUrl.dto";
-import { validationResult } from "express-validator";
 
 /**
  * Controlador para operações relacionadas a URLs.
@@ -78,11 +77,12 @@ export class UrlController {
    * @returns {Promise<Response>} Resposta HTTP com o status da operação.
    */
   async updateOriginalUrl(req: Request, res: Response): Promise<Response> {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
     const { hash } = req.params;
+
+    if (!hash) {
+      return res.status(400).json({ message: "Hash parameter is required" });
+    }
+
     const { originalUrl, user } = req.body;
 
     const url: Partial<Url> = {
