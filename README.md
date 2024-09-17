@@ -11,6 +11,20 @@ Este projeto é um encurtador de URLs construído com Node.js, Express, TypeScri
 docker-compose up -d
 ```
 
+## Configuração do Ambiente
+
+1. **Crie um arquivo `.env`**:
+   Crie um arquivo `.env` na raiz do projeto e preencha as variáveis de ambiente com os valores apropriados.
+
+   Exemplo de `.env`:
+
+   ```properties
+   DATABASE_URL="postgresql://postgres:santiago@localhost:5432/encurtador?schema=public"
+   JWT_SECRET="bahia-campeao-de-ciquenta-e-nova"
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=santiago
+   POSTGRES_DB=encurtador
+
 ## Documentação da API
 
 ```
@@ -70,18 +84,6 @@ As principais dependências do projeto são:
 - `uuid`: Para gerar ids personalizados`.
 
 ## Configuração
-
-### Variáveis de Ambiente
-
-O projeto utiliza variáveis de ambiente definidas no arquivo `.env`. Exemplo:
-
-```
-DATABASE_URL=""
-JWT_SECRET=""
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-POSTGRES_DB=
-```
 
 Os scripts definidos no `package.json` incluem:
 
