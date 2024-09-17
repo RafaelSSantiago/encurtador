@@ -26,10 +26,16 @@ export class UrlController {
    * @param {Response} res - Objeto de resposta do Express.
    * @returns {Promise<void>} Resposta HTTP com a URL encurtada.
    */
-  async shortenUrl(req: Request, res: Response): Promise<void> {
+  async shortenUrl(req: Request, res: Response): Promise<Response> {
     const body: ShortenUrlDto = req.body;
-    const url = await this.shortenUrlUseCase.execute(body);
-    res.json({ shortenedUrl: `http://localhost/${url.shortenedUrl}` });
+    try {
+      const httpResponse = await this.shortenUrlUseCase.execute(body);
+
+      return res.status(httpResponse.statusCode).json(httpResponse.body);
+    } catch (error) {
+      const errorResponse = serverError(error as any);
+      return res.status(errorResponse.statusCode).json(errorResponse.body);
+    }
   }
 
   /**
