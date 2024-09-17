@@ -55,11 +55,11 @@ export class PrismaUrlRepository implements UrlRepository {
         deletedAt: null,
       },
     });
-  
+
     if (!url) {
       return new UrlNotFound();
     }
-  
+
     return await prisma.url.update({
       where: { id: url.id },
       data: { deletedAt: new Date() },
@@ -89,5 +89,18 @@ export class PrismaUrlRepository implements UrlRepository {
         updatedAt: new Date(),
       },
     });
+  }
+
+  async existsByUserAndUrl(
+    userId: string,
+    originalUrl: string
+  ): Promise<boolean> {
+    const count = await prisma.url.count({
+      where: {
+        userId: userId,
+        originalUrl: originalUrl,
+      },
+    });
+    return count > 0;
   }
 }

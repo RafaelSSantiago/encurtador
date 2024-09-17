@@ -8,4 +8,5 @@ export interface UrlRepository {
   updateClicks(url: Url): Promise<void>;
   updateUrl(url: Partial<Url>): Promise<any>;
   softDelete(body: DeleteUrlDTO): Promise<void>;
+  existsByUserAndUrl(userId: string, originalUrl: string): Promise<boolean>;
 }
