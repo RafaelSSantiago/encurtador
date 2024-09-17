@@ -5,6 +5,12 @@
 
 Este projeto é um encurtador de URLs construído com Node.js, Express, TypeScript e Prisma.
 
+## Para Rodar o projeto com o Docker
+
+```
+docker-compose up -d
+```
+
 ## Documentação da API
 
 ```
