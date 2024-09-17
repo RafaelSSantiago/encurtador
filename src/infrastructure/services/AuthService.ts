@@ -10,7 +10,7 @@ export class AuthService {
     this.userRepository = new UserRepository();
     this.bcrypt = new HashService();
   }
-  generateToken(userId: number, email: string) {
+  generateToken(userId: string, email: string) {
     return jwt.sign({ id: userId, email }, process.env.JWT_SECRET!, {
       expiresIn: "3h",
     });
@@ -26,7 +26,7 @@ export class AuthService {
     if (!user) {
       return null;
     }
-
+  
     const isPasswordValid = await this.bcrypt.comparePassword(
       password,
       user.password as string
@@ -36,6 +36,6 @@ export class AuthService {
       return null;
     }
 
-    return this.generateToken(user.id, user.email);
+    return this.generateToken(user.id as string, user.email);
   }
 }

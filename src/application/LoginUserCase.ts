@@ -9,7 +9,6 @@ export default class LoginUserUseCase {
 
   async execute(user: Partial<User>): Promise<HttpResponse> {
     const login = await this.loginUserRepository.login(user);
-    console.log(login)
     if (!login) {
       return unauthorized();
     }
