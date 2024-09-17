@@ -78,6 +78,9 @@ O projeto utiliza variáveis de ambiente definidas no arquivo `.env`. Exemplo:
 ```
 DATABASE_URL=""
 JWT_SECRET=""
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
 ```
 
 Os scripts definidos no `package.json` incluem:
