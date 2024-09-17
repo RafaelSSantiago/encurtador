@@ -34,8 +34,6 @@ export class UrlController {
    *             properties:
    *               originalUrl:
    *                 type: string
-   *               user:
-   *                 type: string
    *     responses:
    *       200:
    *         description: URL encurtada criada com sucesso
@@ -144,8 +142,6 @@ export class UrlController {
    *             type: object
    *             properties:
    *               originalUrl:
-   *                 type: string
-   *               user:
    *                 type: string
    *     responses:
    *       200:

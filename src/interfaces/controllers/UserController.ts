@@ -29,8 +29,6 @@ export class Usercontroller {
    *           schema:
    *             type: object
    *             properties:
-   *               name:
-   *                 type: string
    *               email:
    *                 type: string
    *               password:
