@@ -3,6 +3,8 @@ import { UrlRepository } from "../../domain/repositories/UrlRepository";
 import { Url } from "../../domain/entities/Url";
 import { UrlNotFound } from "../../domain/errors/UrlNotFound.error";
 import { DeleteUrlDTO } from "../../dtos/deleteUrl.dto";
+import { UrlDTO } from "../../dtos/responseUrl.dto";
+
 
 const prisma = new PrismaClient();
 

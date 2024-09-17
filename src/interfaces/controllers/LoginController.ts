@@ -2,6 +2,7 @@ import LoginUserUseCase from "../../application/LoginUserCase";
 import { Request, Response } from "express";
 import { RequiredFieldValidation } from "../../domain/validators/RequiredFieldValidation";
 import { badRequest, serverError } from "../../domain/helpers/httpHelpers";
+import { LoginDTO } from "../../dtos/LoginUser.dto";
 
 /**
  * Controlador para operações relacionadas ao login.

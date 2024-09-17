@@ -1,4 +1,4 @@
-interface UrlDTO {
+export interface UrlDTO {
   id: number;
   originalUrl: string;
   shortenedUrl: string;
