@@ -1,8 +1,15 @@
 # Encurtador de URLs
 
-# Projeto Encurtador de URLs
+
+## Projeto Encurtador de URLs
 
 Este projeto é um encurtador de URLs construído com Node.js, Express, TypeScript e Prisma.
+
+## Documentação da API
+
+```
+A documentação da API gerada pelo Swagger estará disponível em http://localhost:3000/api-docs.
+```
 
 ## Estrutura do Projeto
 
@@ -166,4 +173,3 @@ npm run dev
 ```
 
 O servidor estará disponível em [http://localhost:3000](http://localhost:3000).
-
