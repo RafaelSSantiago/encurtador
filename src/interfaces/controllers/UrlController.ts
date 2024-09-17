@@ -20,17 +20,32 @@ export class UrlController {
   ) {}
 
   /**
-   * @function shortenUrl
-   * @description Cria uma URL encurtada.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<void>} Resposta HTTP com a URL encurtada.
+   * @swagger
+   * /url:
+   *   post:
+   *     summary: Cria uma URL encurtada
+   *     tags: [URLs]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               originalUrl:
+   *                 type: string
+   *               user:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: URL encurtada criada com sucesso
+   *       400:
+   *         description: Erro na requisição
    */
   async shortenUrl(req: Request, res: Response): Promise<Response> {
     const body: ShortenUrlDto = req.body;
     try {
       const httpResponse = await this.shortenUrlUseCase.execute(body);
-
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
       const errorResponse = serverError(error as any);
@@ -39,11 +54,23 @@ export class UrlController {
   }
 
   /**
-   * @function findHashBd
-   * @description Redireciona para a URL original com base no hash fornecido.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<void>} Redireciona para a URL original.
+   * @swagger
+   * /url/{hash}:
+   *   get:
+   *     summary: Redireciona para a URL original com base no hash fornecido
+   *     tags: [URLs]
+   *     parameters:
+   *       - in: path
+   *         name: hash
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: Hash da URL encurtada
+   *     responses:
+   *       302:
+   *         description: Redireciona para a URL original
+   *       404:
+   *         description: URL não encontrada
    */
   async findHashBd(req: Request, res: Response): Promise<void> {
     const { hash } = req.params;
@@ -52,11 +79,32 @@ export class UrlController {
   }
 
   /**
-   * @function deleteShortenedUrl
-   * @description Deleta uma URL encurtada com base no hash fornecido.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<Response>} Resposta HTTP com o status da operação.
+   * @swagger
+   * /url/{hash}:
+   *   delete:
+   *     summary: Deleta uma URL encurtada com base no hash fornecido
+   *     tags: [URLs]
+   *     parameters:
+   *       - in: path
+   *         name: hash
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: Hash da URL encurtada
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               user:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: URL encurtada deletada com sucesso
+   *       400:
+   *         description: Erro na requisição
    */
   async deleteShortenedUrl(req: Request, res: Response): Promise<Response> {
     const body: DeleteUrlDTO = req.body;
@@ -76,11 +124,34 @@ export class UrlController {
   }
 
   /**
-   * @function updateOriginalUrl
-   * @description Atualiza a URL original de uma URL encurtada com base no hash fornecido.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<Response>} Resposta HTTP com o status da operação.
+   * @swagger
+   * /url/{hash}:
+   *   put:
+   *     summary: Atualiza a URL original de uma URL encurtada com base no hash fornecido
+   *     tags: [URLs]
+   *     parameters:
+   *       - in: path
+   *         name: hash
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: Hash da URL encurtada
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               originalUrl:
+   *                 type: string
+   *               user:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: URL original atualizada com sucesso
+   *       400:
+   *         description: Erro na requisição
    */
   async updateOriginalUrl(req: Request, res: Response): Promise<Response> {
     const { hash } = req.params;

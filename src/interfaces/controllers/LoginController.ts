@@ -10,11 +10,29 @@ export class LoginController {
   constructor(private loginUserUseCase: LoginUserUseCase) {}
 
   /**
-   * @function login
-   * @description Realiza o login de um usuário.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<Response>} Resposta HTTP com o status da operação.
+   * @swagger
+   * /login:
+   *   post:
+   *     summary: Realiza o login de um usuário
+   *     tags: [Login]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               email:
+   *                 type: string
+   *               password:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Login realizado com sucesso
+   *       400:
+   *         description: Erro na requisição
+   *       401:
+   *         description: Credenciais inválidas
    */
   async login(req: Request, res: Response): Promise<Response> {
     const body: LoginDTO = req.body;

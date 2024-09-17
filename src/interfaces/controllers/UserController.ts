@@ -17,11 +17,29 @@ export class Usercontroller {
   }
 
   /**
-   * @function createUSerdDb
-   * @description Registra um novo usuário no banco de dados.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<Response>} Resposta HTTP com o status e o corpo da resposta.
+   * @swagger
+   * /user:
+   *   post:
+   *     summary: Registra um novo usuário
+   *     tags: [Users]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               name:
+   *                 type: string
+   *               email:
+   *                 type: string
+   *               password:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Usuário registrado com sucesso
+   *       400:
+   *         description: Erro na requisição
    */
   async createUSerdDb(req: Request, res: Response): Promise<Response> {
     const body: User = req.body;
@@ -42,11 +60,18 @@ export class Usercontroller {
   }
 
   /**
-   * @function listUserUrls
-   * @description Lista todas as URLs encurtadas do usuário autenticado.
-   * @param {Request} req - Objeto de requisição do Express.
-   * @param {Response} res - Objeto de resposta do Express.
-   * @returns {Promise<Response>} Resposta HTTP com o status e o corpo da resposta.
+   * @swagger
+   * /user/url:
+   *   get:
+   *     summary: Lista todas as URLs encurtadas do usuário autenticado
+   *     tags: [Users]
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Lista de URLs encurtadas
+   *       401:
+   *         description: Não autorizado
    */
   async listUserUrls(req: Request, res: Response): Promise<Response> {
     const body: UserToken = req.body.user;
