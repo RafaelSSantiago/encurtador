@@ -19,11 +19,11 @@ docker-compose up -d
    Exemplo de `.env`:
 
    ```properties
-   DATABASE_URL="postgresql://postgres:santiago@localhost:5432/encurtador?schema=public"
-   JWT_SECRET="bahia-campeao-de-ciquenta-e-nova"
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=santiago
-   POSTGRES_DB=encurtador
+   DATABASE_URL="postgresql://suaDataBase"
+   JWT_SECRET="suaSecret"
+   POSTGRES_USER=seuUser
+   POSTGRES_PASSWORD=suaSenha
+   POSTGRES_DB=seubanco
 
 ## Documentação da API
 
