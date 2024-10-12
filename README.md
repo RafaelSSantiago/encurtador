@@ -5,6 +5,26 @@
 
 Este projeto é um encurtador de URLs construído com Node.js, Express, TypeScript e Prisma.
 
+## Para Rodar o projeto com o Docker
+
+```
+docker-compose up -d
+```
+
+## Configuração do Ambiente
+
+1. **Crie um arquivo `.env`**:
+   Crie um arquivo `.env` na raiz do projeto e preencha as variáveis de ambiente com os valores apropriados.
+
+   Exemplo de `.env`:
+
+   ```properties
+   DATABASE_URL="postgresql://suaDataBase"
+   JWT_SECRET="suaSecret"
+   POSTGRES_USER=seuUser
+   POSTGRES_PASSWORD=suaSenha
+   POSTGRES_DB=seubanco
+
 ## Documentação da API
 
 ```
@@ -64,15 +84,6 @@ As principais dependências do projeto são:
 - `uuid`: Para gerar ids personalizados`.
 
 ## Configuração
-
-### Variáveis de Ambiente
-
-O projeto utiliza variáveis de ambiente definidas no arquivo `.env`. Exemplo:
-
-```
-DATABASE_URL=""
-JWT_SECRET=""
-```
 
 Os scripts definidos no `package.json` incluem:
 
